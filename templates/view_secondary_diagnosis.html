@@ -1,0 +1,192 @@
+{% extends 'app_dashboard_base.html' %}
+{% load custom_tags %}
+{% block content %}
+
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:white;border:10px solid green;border-radius:30px;">
+
+                <div class="row">
+                    <div class="col-12">
+                        {% if secondary_diagnosis_farmer.diagnosis.image %}
+                        <img src="/media/{{secondary_diagnosis_farmer.diagnosis.image}}" width="100%">
+                        {% else %}
+                        <img src="/media/uploads/default_plant_image.png" width="100%">
+                        {% endif %}
+
+                        <br><br>
+
+                        <div class="row">
+                            <div class="col-12 p-4">
+                                <div class="row">
+                                    <label style="font-size:40px;"><b>FARM DETAILS</b></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if user.member.lab_attendant %}
+                        <div class="row">
+                            <div class="col-12 p-4">
+                                <div class="row">
+                                    <label style="font-size:40px;">Farmer<br>{{secondary_diagnosis_farmer.farmer}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <div class="row">
+                            <div class="col-12 p-4">
+                                <div class="row">
+                                    <label style="font-size:40px;">Diagnosis<br>{{secondary_diagnosis_farmer.diagnosis.disease}}</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 p-4">
+                                <div class="row">
+                                    <label style="font-size:40px;">Confidence Level<br>{{secondary_diagnosis_farmer.diagnosis.confidence_level}}%</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br><br>
+
+                        <div class="row">
+                            <div class="col-12 p-4">
+                                <div class="row">
+                                    <label style="font-size:40px;"><b>AVAILABLE DAYS FOR LAB VISIT</b></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if secondary_diagnosis_farmer.monday_start is not None %}
+                        <div class="row">
+                            <div class="col-12 p-4">
+                                <div class="row">
+                                    <label style="font-size:40px;">Mondays<br>{{secondary_diagnosis_farmer.monday_start}} till {{secondary_diagnosis_farmer.monday_stop}}</label>
+                                    <a class="btn btn-primary btn-sm" style="font-size:40px;width:50%;border-radius:30px;" href="{% url 'secondary_diagnosis_response' secondary_diagnosis_lab.id 'monday' secondary_diagnosis_farmer.monday_start secondary_diagnosis_farmer.monday_stop %}">select</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if secondary_diagnosis_farmer.tuesday_start is not None %}
+                        <div class="row">
+                            <div class="col-12 p-4">
+                                <div class="row">
+                                    <label style="font-size:40px;">tuesdays<br>{{secondary_diagnosis_farmer.tuesday_start}} till {{secondary_diagnosis_farmer.tuesday_stop}}</label>
+                                    <a class="btn btn-primary btn-sm" style="font-size:40px;width:50%;border-radius:30px;" href="{% url 'secondary_diagnosis_response' secondary_diagnosis_lab.id 'tuesday' secondary_diagnosis_farmer.tuesday_start secondary_diagnosis_farmer.tuesday_stop %}">select</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if secondary_diagnosis_farmer.wednessday_start is not None %}
+                        <div class="row">
+                            <div class="col-12 p-4">
+                                <div class="row">
+                                    <label style="font-size:40px;">wednessdays<br>{{secondary_diagnosis_farmer.wednessday_start}} till {{secondary_diagnosis_farmer.wednessday_stop}}</label>
+                                    <a class="btn btn-primary btn-sm" style="font-size:40px;width:50%;border-radius:30px;" href="{% url 'secondary_diagnosis_response' secondary_diagnosis_lab.id 'wednessday' secondary_diagnosis_farmer.wednessday_start secondary_diagnosis_farmer.wednessday_stop %}">select</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if secondary_diagnosis_farmer.thursday_start is not None %}
+                        <div class="row">
+                            <div class="col-12 p-4">
+                                <div class="row">
+                                    <label style="font-size:40px;">thursdays<br>{{secondary_diagnosis_farmer.thursday_start}} till {{secondary_diagnosis_farmer.thursday_stop}}</label>
+                                    <a class="btn btn-primary btn-sm" style="font-size:40px;width:50%;border-radius:30px;" href="{% url 'secondary_diagnosis_response' secondary_diagnosis_lab.id 'thursday' secondary_diagnosis_farmer.thursday_start secondary_diagnosis_farmer.thursday_stop %}">select</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if secondary_diagnosis_farmer.friday_start is not None %}
+                        <div class="row">
+                            <div class="col-12 p-4">
+                                <div class="row">
+                                    <label style="font-size:40px;">fridays<br>{{secondary_diagnosis_farmer.friday_start}} till {{secondary_diagnosis_farmer.friday_stop}}</label>
+                                    <a class="btn btn-primary btn-sm" style="font-size:40px;width:50%;border-radius:30px;" href="{% url 'secondary_diagnosis_response' secondary_diagnosis_lab.id 'friday' secondary_diagnosis_farmer.friday_start secondary_diagnosis_farmer.friday_stop %}">select</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <br><br>
+
+                        <div class="row">
+                            <div class="col-12 p-4">
+                                <div class="row">
+                                    <label style="font-size:40px;"><b>LAB DETAILS</b></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 p-4">
+                                <div class="row">
+                                    <label style="font-size:40px;">Lab Attendant<br>{{secondary_diagnosis_lab.lab_attendant}}</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 p-4">
+                                <div class="row">
+                                    <label style="font-size:40px;">Selected Visit Day<br>{{secondary_diagnosis_lab.selected_visit_day}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        {% if user.member.farmer %}
+                        <div class="row">
+                            <div class="col-12 p-4">
+                                <div class="row">
+                                    <label style="font-size:40px;">STATUS (tap to change status)</label>
+                                    {% if secondary_diagnosis_lab.diagnosis.status == 'successful' %}
+                                        <center><a class="btn btn-success btn-sm" style="font-size:40px;width:75%;border-radius:30px;" href="{% url 'status_toggle' secondary_diagnosis_lab.diagnosis.id secondary_diagnosis_farmer.farmer.member.user.id %}">{{secondary_diagnosis_lab.diagnosis.status}}</a></center>
+                                    {% elif secondary_diagnosis_lab.diagnosis.status == 'treatment' %}
+                                        <center><a class="btn btn-warning btn-sm" style="font-size:40px;width:75%;border-radius:30px;" href="{% url 'status_toggle' secondary_diagnosis_lab.diagnosis.id secondary_diagnosis_farmer.farmer.member.user.id %}">{{secondary_diagnosis_lab.diagnosis.status}}</a></center>
+                                    {% elif secondary_diagnosis_lab.diagnosis.status == 'indecisive' %}
+                                        <center><a class="btn btn-danger btn-sm" style="font-size:40px;width:75%;border-radius:30px;" href="{% url 'status_toggle' secondary_diagnosis_lab.diagnosis.id secondary_diagnosis_farmer.farmer.member.user.id %}">{{secondary_diagnosis_lab.diagnosis.status}}</a></center>
+                                    {% elif secondary_diagnosis_lab.diagnosis.status == 'decisive' %}
+                                        <center><a class="btn btn-info btn-sm" style="font-size:40px;width:75%;border-radius:30px;" href="{% url 'status_toggle' secondary_diagnosis_lab.diagnosis.id secondary_diagnosis_farmer.farmer.member.user.id %}">{{secondary_diagnosis_lab.diagnosis.status}}</a></center>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% elif user.member.lab_attendant %}
+                        <div class="row">
+                            <div class="col-12 p-4">
+                                <div class="row">
+                                    <label style="font-size:40px;">STATUS</label>
+                                    {% if secondary_diagnosis_lab.diagnosis.status == 'successful' %}
+                                        <center><a class="btn btn-success btn-sm" style="font-size:40px;width:75%;border-radius:30px;">{{secondary_diagnosis_lab.diagnosis.status}}</a></center>
+                                    {% elif secondary_diagnosis_lab.diagnosis.status == 'treatment' %}
+                                        <center><a class="btn btn-warning btn-sm" style="font-size:40px;width:75%;border-radius:30px;">{{secondary_diagnosis_lab.diagnosis.status}}</a></center>
+                                    {% elif secondary_diagnosis_lab.diagnosis.status == 'indecisive' %}
+                                        <center><a class="btn btn-danger btn-sm" style="font-size:40px;width:75%;border-radius:30px;">{{secondary_diagnosis_lab.diagnosis.status}}</a></center>
+                                    {% elif secondary_diagnosis_lab.diagnosis.status == 'decisive' %}
+                                        <center><a class="btn btn-info btn-sm" style="font-size:40px;width:75%;border-radius:30px;">{{secondary_diagnosis_lab.diagnosis.status}}</a></center>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+
+          </div>
+        </div>
+{% endblock %}
+
+
+
+
+
+
+

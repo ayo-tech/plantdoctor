@@ -1,0 +1,104 @@
+{% extends 'app_dashboard_base.html' %}
+{% load custom_tags %}
+{% block content %}
+
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:white;border:10px solid green;border-radius:30px;">
+
+                <div class="row">
+                    <div class="col-12">
+
+                        <h1 style="font-size:40px;">Please Select the time on each day of the week that our lab attendants can come to take the soil samples from your farm</h1>
+                        <br><br>
+                        <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                            <h1 style="font-size:40px;">Monday</h1>
+
+                              <div class="row">
+                                {% for field in form %}
+                                {% if 'Monday' in field.label %}
+                                    <div class="col-6 p-4">
+                                        <div class="row">
+                                            <label style="font-size:40px;">{% if 'start' in field.label %}free From{% else %}free Till{% endif %}</label>
+                                            <input style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:40px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="{{field.name}}" name="{{field.name}}" id="id_{{field.name}}" type="time">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% endfor %}
+                              </div>
+
+                            <h1 style="font-size:40px;">Tuesday</h1>
+                              <div class="row">
+                                {% for field in form %}
+                                {% if 'Tuesday' in field.label %}
+
+                                    <div class="col-6 p-4">
+                                        <div class="row">
+                                            <label style="font-size:40px;">{% if 'start' in field.label %}free From{% else %}free Till{% endif %}</label>
+                                            <input style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:40px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="{{field.name}}" name="{{field.name}}" id="id_{{field.name}}" type="time">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% endfor %}
+                              </div>
+                            <h1 style="font-size:40px;">Wednessday</h1>
+
+                              <div class="row">
+                                {% for field in form %}
+                                {% if 'Wednessday' in field.label %}
+                                    <div class="col-6 p-4">
+                                        <div class="row">
+                                            <label style="font-size:40px;">{% if 'start' in field.label %}free From{% else %}free Till{% endif %}</label>
+                                            <input style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:40px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="{{field.name}}" name="{{field.name}}" id="id_{{field.name}}" type="time">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% endfor %}
+                              </div>
+
+                            <h1 style="font-size:40px;">Thursday</h1>
+
+                              <div class="row">
+                                {% for field in form %}
+                                {% if 'Thursday' in field.label %}
+                                    <div class="col-6 p-4">
+                                        <div class="row">
+                                            <label style="font-size:40px;">{% if 'start' in field.label %}free From{% else %}free Till{% endif %}</label>
+                                            <input style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:40px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="{{field.name}}" name="{{field.name}}" id="id_{{field.name}}" type="time">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% endfor %}
+                              </div>
+
+                            <h1 style="font-size:40px;">Friday</h1>
+
+                              <div class="row">
+                                {% for field in form %}
+                                {% if 'Friday' in field.label %}
+                                    <div class="col-6 p-4">
+                                        <div class="row">
+                                            <label style="font-size:40px;">{% if 'start' in field.label %}free From{% else %}free Till{% endif %}</label>
+                                            <input style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:40px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="{{field.name}}" name="{{field.name}}" id="id_{{field.name}}" type="time">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% endfor %}
+                              </div>
+
+                              <div class="row">
+                                <div class="col-12 p-4">
+                                    <div class="row pt-5">
+                                        <button name="submit" class="col-12 p-5" style="border-radius:30px;background-color:green;color:white;"><center><h1><b>SUBMIT</b></h1></center></button>
+                                    </div>
+                                </div>
+                              </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+          </div>
+        </div>
+{% endblock %}

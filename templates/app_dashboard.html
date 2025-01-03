@@ -1,0 +1,106 @@
+{% extends 'app_dashboard_base.html' %}
+{% block content %}
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:#454B1B;color:white;border:10px solid #454B1B;border-radius:30px;">
+                <div class="row">
+                    <img src="/media/uploads/applogo2.png" class="col-3">
+                    <h1 class="col-9 pt-5" style="font-size:80px;color:white;"><b>PlantDoctor</b></h1>
+                </div>
+                <div class="row">
+                    <h3 class="col-9 pt-5" style="font-size:50px;color:white;"><b>Welcome {{user.member.name}}<br>({{user.member.designation}})</b></h3>
+                </div>
+            </div>
+          </div>
+        </div>
+
+    {% if user.member.designation == 'admin' %}
+
+        <a href="{% url 'disease_database' %}" style="color:white;text-decoration:none;">
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:green;color:white;border:10px solid green;border-radius:30px;">
+                <div class="row">
+                    <h1 class="col-12 pt-5" style="font-size:80px;color:white;"><b><center>DISEASE DATABASE</center></b></h1>
+                </div>
+            </div>
+          </div>
+        </div>
+        <a>
+
+        <a href="{% url 'all_diagnosis_details' %}" style="color:white;text-decoration:none;">
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:green;color:white;border:10px solid green;border-radius:30px;">
+                <div class="row">
+                    <h1 class="col-12 pt-5" style="font-size:80px;color:white;"><b><center>ALL DIAGNOSIS DETAILS</center></b></h1>
+                </div>
+            </div>
+          </div>
+        </div>
+        <a>
+
+        <a href="{% url 'treatments' 'display' None %}" style="color:white;text-decoration:none;">
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:green;color:white;border:10px solid green;border-radius:30px;">
+                <div class="row">
+                    <h1 class="col-12 pt-5" style="font-size:80px;color:white;"><b><center>ALL TREATMENTS</center></b></h1>
+                </div>
+            </div>
+          </div>
+        </div>
+        <a>
+
+        <a href="{% url 'first_aids' 'display' None %}" style="color:white;text-decoration:none;">
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:green;color:white;border:10px solid green;border-radius:30px;">
+                <div class="row">
+                    <h1 class="col-12 pt-5" style="font-size:80px;color:white;"><b><center>ALL FIRST AID</center></b></h1>
+                </div>
+            </div>
+          </div>
+        </div>
+        <a>
+
+    {% else %}
+
+        <a href="{% url 'app_image_upload' %}" style="color:white;text-decoration:none;">
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:green;color:white;border:10px solid green;border-radius:30px;">
+                <div class="row">
+                    <h1 class="col-12 pt-5" style="font-size:80px;color:white;"><b><center>SNAP A DISEASED PLANT</center></b></h1>
+                </div>
+            </div>
+          </div>
+        </div>
+        <a>
+
+        <a href="{% url 'app_details' %}" style="color:white;text-decoration:none;">
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:green;color:white;border:10px solid green;border-radius:30px;">
+                <div class="row">
+                    <h1 class="col-12 pt-5" style="font-size:80px;color:white;"><b><center>DIAGNOSIS DETAILS</center></b></h1>
+                </div>
+            </div>
+          </div>
+        </div>
+        <a>
+
+        <a href="{% url 'diagnosis_history' %}" style="color:white;text-decoration:none;">
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:green;color:white;border:10px solid green;border-radius:30px;">
+                <div class="row">
+                    <h1 class="col-12 pt-5" style="font-size:80px;color:white;"><b><center>DIAGNOSIS HISTORY</center></b></h1>
+                </div>
+            </div>
+          </div>
+        </div>
+        <a>
+    {% endif %}
+
+{% endblock %}

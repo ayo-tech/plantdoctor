@@ -1,0 +1,131 @@
+{% extends 'app_dashboard_base.html' %}
+{% load custom_tags %}
+{% block content %}
+
+        <button onclick="myFunction('Demo1@')" class="contained col-12 p-5 w3-button w3-block w3-black w3-left-align" style="border-radius:30px;background-color:green;color:white;"><center><h1><b>POST A CHAT</b></h1></center></button>
+
+        <div id="Demo1@" class="w3-hide w3-animate-zoom">
+            <div class="contained">
+                <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                  <div class="row">
+                    <div class="col-12 p-4" style="background-color:none;color:green;border:30px solid green;border-radius:30px;">
+                        {% for field in form %}
+                            {% if field.label == 'Message' %}
+                                <div class="row pt-3">
+                                    <label class="outline" style="font-size:60px;"><b><strong>{{field.label}}</strong></b></label>
+                                    <textarea rows=4 style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:450px;font-size:60px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="{{field.label}}" type="{{field.field.widget.input_type}}" name="{{field.name}}" id="id_{{field.name}}">Message</textarea>
+                                </div>
+                            {% elif field.label == 'Youtube video' %}
+                                <div class="row pt-3">
+                                    <label class="outline" style="font-size:60px;"><b><strong>{{field.label}}</strong></b></label>
+                                    <textarea rows=2 style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:250px;font-size:60px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="{{field.label}}" type="{{field.field.widget.input_type}}" name="{{field.name}}" id="id_{{field.name}}">Youtube Shared Link</textarea>
+                                </div>
+                            {% else %}
+                                <div class="row pt-3">
+                                    <label class="outline" style="font-size:60px;"><b><strong>{{field.label}}</strong></b></label>
+                                    <input style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:60px;border-radius:30px;background-color:green;color:white;opacity:0.9;" class="form-control col-12" placeholder="{{field.label}}" type="{{field.field.widget.input_type}}" name="{{field.name}}" id="id_{{field.name}}" value="data here">
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="row pt-5">
+                            <button name="create" class="col-12 p-5" style="border-radius:30px;background-color:green;color:white;"><center><h1><b>CREATE POST</b></h1></center></button>
+                        </div>
+                    </div>
+                  </div>
+                </form>
+            </div>
+        </div>
+
+        {% for chat in object_list %}
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:white;border:10px solid green;border-radius:30px;">
+
+                <div class="row">
+                    <div class="col-12">
+                        {% if chat.picture %}
+                        <img src="/media/{{chat.picture}}" width="100%">
+                        {% else %}
+                        <img src="/media/uploads/default_image.png" width="100%">
+                        {% endif %}
+                        <br><br>
+                        <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                              <br>
+                              <div class="row">
+                                    <div class="col-12 p-4">
+                                        <div class="row">
+                                            <label style="font-size:40px;">{{chat.message}}</label>
+                                        </div>
+                                    </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                    <div class="col-12 p-4">
+                                        <div class="row">
+                                            <iframe width="100%" height="500" src="https://www.youtube.com/embed/{{chat.youtube_video|youtube_editor}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                        </div>
+                                    </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                    <div class="col-12 p-4">
+                                        <div class="row">
+                                            <audio class="audioPlayer" controls>
+                                              <source src="/media/{{chat.sound}}" type="audio/mpeg">
+                                              Your browser does not support the audio element.
+                                            </audio>
+                                        </div>
+                                    </div>
+                              </div>
+                        </form>
+                    </div>
+                </div>
+
+                <button onclick="myFunction('Demo{{forloop.counter}}')" class="contained col-12 p-5 w3-button w3-block w3-black w3-left-align" style="border-radius:30px;background-color:green;color:white;"><center><h1><b>Comments</b></h1></center></button>
+
+                <div id="Demo{{forloop.counter}}" class="w3-hide w3-animate-zoom">
+                    <div class="contained">
+                        <form id="comment" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div style="display:none;">{{form}}</div>
+                          <div class="row">
+                            <div class="col-12 p-4">
+                                <div class="row pt-3">
+                                    <input type="hidden" value="{{chat.id}}" name="chat_id">
+                                    <label style="font-size:60px;"><b><strong>comment here</strong></b></label>
+                                    <textarea rows=3 style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:450px;font-size:60px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="comment here" name="new_comment"></textarea>
+                                </div>
+                                <div class="row pt-5">
+                                    <button name="comment" class="col-12 p-5" style="border-radius:30px;background-color:green;color:white;"><center><h1><b>ADD COMMENT</b></h1></center></button>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12 p-4">
+                                <div class="row pt-3">
+                                    <label style="font-size:60px;"><b><strong>Comments</strong></b></label>
+                                    {% for comment in chat|comments %}
+                                    <p style="font-size:40px;">{{comment}}</p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                          </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+          </div>
+        </div>
+        {% endfor %}
+{% endblock %}
+
+
+
+
+
+
+

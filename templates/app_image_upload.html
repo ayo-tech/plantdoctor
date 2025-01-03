@@ -1,0 +1,135 @@
+{% extends 'app_dashboard_base.html' %}
+{% load custom_tags %}
+{% block content %}
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:none;color:green;border:30px solid green;border-radius:30px;">
+                <div class="row">
+                    <label class="col-6" for="id_{{form.image.name}}"><img src="/media/uploads/camera.png" width="400px"></label>
+                    <label class="col-6" style="font-size: 40px;color: black;border:10px solid black;border-radius: 30px;"><b>Click here to use your camera to snap a diseased plant</b></label>
+                </div>
+                <br>
+                <div class="row">
+                    <label class="col-6" for="id_{{form.image.name}}"><img src="/media/uploads/folder.png" width="400px"></label>
+                    <label class="col-6" style="font-size: 40px;color: black;border:10px solid black;border-radius: 30px;"><b>Click here to select a plant's diseased image from your gallery</b></label>
+                </div>
+                <div class="row pt-3">
+                    <input style="font-size:60px;" class="form-control col-12" placeholder="Name" type="file" name="{{form.image.name}}" id="id_{{form.image.name}}" accept="image/*" capture="environment" required>
+                </div>
+                <div class="row pt-5">
+                    <button class="col-12 p-5" style="border-radius:30px;background-color:green;color:white;" type="submit"><center><h1><b>SUBMIT SNAP/FILE</b></h1></center></button>
+                </div>
+            </div>
+          </div>
+        </div>
+        </form>
+        {% for image in page_obj.object_list %}
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:white;border:10px solid green;border-radius:30px;">
+                <div class="row">
+                    <div class="col-8">
+
+                        <!-- Button trigger modal -->
+                        <button style="border:5px solid white;background-color:white;color:red;" type="button"  data-bs-toggle="modal" data-bs-target="#delete{{forloop.counter}}">
+                            <i class="fa fa-times fa-3x" aria-hidden="true"></i>
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="delete{{forloop.counter}}" tabindex="-1" aria-labelledby="delete{{forloop.counter}}Label" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title p-5" id="delete{{forloop.counter}}Label" style="font-size:45px;">Are you sure you want to delete this Diagnosis?</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <form method="get" id="deleteform{{forloop.counter}}">
+                                    {% csrf_token %}
+                                    <div style="display:none;"><input name="delete" value="{{image.3}}"></div>
+                                </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="font-size:45px;">Close</button>
+                                <button type="submit" form="deleteform{{forloop.counter}}" class="btn btn-outline-danger" style="font-size:45px;">Yes</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <h6 style="font-size:30px;color:green;"><strong><b>DIAGNOSIS</b></strong></h6>
+                        <h3 style="font-size:45px;">{{image.0.0|diagnosis_editor}}</h3>
+                    </div>
+                    <div class="col-4">
+                        <img src="/media/{{image.1}}" width="250px" style="border-radius:30px;">
+                    </div>
+                </div>
+                {% if 80 <= image.0|percent_acc <= 100  %}
+                <progress class="mt-5 mb-5" style="color:green;font-size:20px;width:100%;" value="{{image.0|percent_acc}}" max="100"> {{image.0|percent_acc}} &percnt; </progress>
+                {% elif 50 <= image.0|percent_acc < 80  %}
+                <progress class="mt-5 mb-5" style="color:yellow;font-size:20px;width:100%;" value="{{image.0|percent_acc}}" max="100"> {{image.0|percent_acc}} &percnt; </progress>
+                {% elif 0 <= image.0|percent_acc < 50  %}
+                <progress class="mt-5 mb-5" style="color:red;font-size:20px;width:100%;" value="{{image.0|percent_acc}}" max="100"> {{image.0|percent_acc}} &percnt; </progress>
+                {% endif %}
+                <div class="row">
+                    {% if image.0|percent_acc >= 60 %}
+                    <div class="col-6">
+                        <h3 style="font-size:50px;float:left;">{% if image.2 is True %} Processed{% else %} Not Processed {% endif %}</h3>
+                    </div>
+                    <div class="col-6">
+                        <a href="{% url 'treatments' 'diagnosis' image.0|disease_pred %}" class="p-3" style="text-decoration:none;font-size:40px;float:right;border-radius:20px;color:white;background-color:green;"><b>View Treatments</b></a>
+                    </div>
+                    {% elif image.0|percent_acc >= 40 and image.0|percent_acc < 60 %}
+                    <div class="col-6">
+                        <h3 style="font-size:50px;float:left;">{% if image.2 is True %} Processed{% else %} Not Processed {% endif %}</h3>
+                    </div>
+                    <div class="col-6">
+                        <a href="{% url 'first_aids' 'diagnosis' image.0|disease_pred %}" class="p-3" style="text-decoration:none;font-size:40px;float:right;border-radius:20px;color:white;background-color:green;"><b>Get First AID</b></a>
+                    </div>
+                    {% elif image.0|percent_acc < 40 %}
+                    <div class="col-4">
+                        <h3 style="font-size:50px;float:left;">{% if image.2 is True %} Processed{% else %} Not Processed {% endif %}</h3>
+                    </div>
+                        {% if user.member.farmer and image.2 is True %}
+                            {% if image.3|check_secondary_diagnosis:user.id is not None %}
+                            <div class="col-8">
+                                <a href="{% url 'view_secondary_diagnosis' image.3 user.id %}" class="p-3" style="text-decoration:none;font-size:40px;float:right;border-radius:20px;color:white;background-color:#009E69;"><b>View Secondary Diagnosis</b></a>
+                            </div>
+                            {% else %}
+                            <div class="col-8">
+                                <a href="{% url 'get_secondary_diagnosis' image.3 user.id %}" class="p-3" style="text-decoration:none;font-size:40px;float:right;border-radius:20px;color:white;background-color:#009E60;"><b>Get Secondary Diagnosis</b></a>
+                            </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:white;border:10px solid green;border-radius:30px;">
+
+                <div class="row">
+                {%if page_obj.has_previous %} {# whether the previous page exists #}
+                    <a href="?page={{page_obj.previous_page_number}}"><</a> {# link to the prev page #}
+                {% endif %}
+
+                    <div class="col-8">
+                        <a href="#" class="p-3" style="text-decoration:none;font-size:40px;float:right;border-radius:20px;color:white;background-color:#009E69;"><b>{{page_obj.number}}</b></a>
+                    </div>
+
+                {%if page_obj.has_next %} {# whether the next page exists #}
+                    <a href="?page={{page_obj.next_page_number}}">></a> {# link to the next page #}
+                {% endif %}
+                </div>
+
+            </div>
+          </div>
+        </div>
+
+{% endblock %}

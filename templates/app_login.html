@@ -1,0 +1,87 @@
+<html>
+    <title>PlantDoctoor Login</title>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <style>
+            .contained {
+                width:90%;
+                margin:auto;
+            }
+            .show {
+                z-index:1;
+            }
+        </style>
+    </head>
+    <body background="/media/uploads/green2.png" style="background-size:cover;opacity:0.6;">
+        <div class="contained pt-5" style="height:25%;opacity:0.9;">
+          <div class="row" style="margin-top:10%;">
+            <div class="col-12">
+              <h1 style="color:white;font-size:120px;"><strong><b>Hello!</b></strong></h1><br><h2 style="font-size:80px;color:white;opacity:0.9;">Welcome Back</h2>
+            </div>
+          </div>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="contained pt-5" style="height:45%;opacity:0.9;">
+              <div class="row">
+                <div class="col-12">
+                  <label style="color:white;width:100%;font-size:40px;"><strong><b>USERNAME</b></strong></label>
+                  <input class="form-control" type="{{form.username.field.widget.input_type}}" name="{{form.username.name}}" id="id_{{form.username.name}}" style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:60px;border-radius:40px;opacity:0.9;">
+                </div>
+                <div class="col-12 pt-2">
+                  <label style="color:white;width:100%;font-size:40px;"><strong><b>PASSWORD</b></strong></label>
+                  <input id="id_password" class="form-control" type="password" name="{{form.password.name}}" style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:60px;border-radius:40px;opacity:0.9;">
+                <img src="/media/uploads/eye.png"
+                     width="12%"
+                     height="15%"
+                     style=
+                         "display: inline;
+                         margin-left: 0%;
+                         vertical-align: middle"
+                     id="togglePassword">
+                <br /><br />
+                </div>
+              </div>
+            </div>
+            <div class="contained pt-5" style="height:30%;opacity:0.9;">
+              <div class="row">
+                <div class="col-12 pt-5">
+                  <button type="submit" class="btn btn-block p-5" style="background-color: #228B22; width: 100%; color: white; font-size: 50px; border-radius: 90px;"><strong><b>LOGIN</b></strong></button>
+                </div>
+                <div class="col-12 pt-5">
+                  <a class="btn btn-block p-5" href="{% url 'register_user' %}" style="background-color: black; width: 100%; color: white; font-size: 50px; border-radius: 90px;"><strong><b>CREATE AN ACCOUNT</b></strong></a>
+                  <a href="#" class="btn btn-block p-1" style="color:black;text-decoration:none;background-color:white;font-size:40px;border-radius:20px;opacity:0.9;"><strong><b>FORGOT PASSWORD</b></strong></a>
+                </div>
+              </div>
+            </div>
+        </form>
+    <script>
+        const togglePassword =
+              document.querySelector('#togglePassword');
+
+        const password =
+              document.querySelector('#id_password');
+
+        togglePassword.
+        addEventListener('click', function (e) {
+
+            // Toggle the type attribute
+            const type = password.getAttribute(
+                'type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+
+            // Toggle the eye slash icon
+            if (togglePassword.src.match(
+                "/media/uploads/eyeslash.png")) {
+                togglePassword.src =
+                "/media/uploads/eye.png";
+            } else {
+                togglePassword.src =
+                "/media/uploads/eyeslash.png";
+            }
+        });
+    </script>
+    </body>
+</html>

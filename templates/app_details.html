@@ -1,0 +1,65 @@
+{% extends 'app_dashboard_base.html' %}
+{% block content %}
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:green;color:white;border:10px solid green;border-radius:30px;">
+                <div class="row">
+                    <img src="/media/uploads/applogo2.png" class="col-3">
+                    <h1 class="col-9 pt-5" style="font-size:80px;color:white;"><b>PLANT DOCTOR</b></h1>
+                </div>
+                <div class="row">
+                    <h3 class="col-9 pt-5" style="font-size:50px;color:white;"><b>Welcome {{user.member.designation}}</b></h3>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+
+            <div class="col-4">
+                <a style="text-decoration:none;" href="{% url 'secondary_diagnosis_list' %}"><div class="p-3" style="color:white;font-size:40px;background-color:green;border:5px solid green;border-radius:30px;"><img width="100%" src="/media/uploads/visit.png"><br><b>SECONDARY DIAGNOSIS</b></div></a>
+            </div>
+
+            <div class="col-4">
+                <a style="text-decoration:none;" href="{% url 'treatment_in_progress' %}"><div class="p-3" style="color:white;font-size:40px;background-color:green;border:5px solid green;border-radius:30px;"><img width="100%" src="/media/uploads/treatment.png"><br><b>TREATMENT IN PROGRESS</b></div></a>
+            </div>
+
+            <div class="col-4">
+                <a style="text-decoration:none;" href="{% url 'decisive_diagnosis' %}"><div class="p-3" style="color:white;font-size:40px;background-color:green;border:5px solid green;border-radius:30px;"><img width="100%" src="/media/uploads/decisive.png"><br><b>DECISIVE DIAGNOSIS</b></div></a>
+            </div>
+
+          </div>
+
+          <div class="row" style="margin-top:2%;">
+
+            <div class="col-4">
+                <a style="text-decoration:none;" href="{% url 'indecisive_diagnosis' %}"><div class="p-3" style="color:white;font-size:40px;background-color:green;border:5px solid green;border-radius:30px;"><img width="100%" src="/media/uploads/indecisive.png"><br><b>INDECISIVE DIAGNOSIS</b></div></a>
+            </div>
+
+            <div class="col-4">
+                <a style="text-decoration:none;" href="{% url 'successful_treatments' %}"><div class="p-3" style="color:white;font-size:35px;background-color:green;border:5px solid green;border-radius:30px;"><img width="100%" src="/media/uploads/successful.png"><br><b>SUCCESSFUL TREATMENTS</b></div></a>
+            </div>
+
+            {% if user.member.lab_attendant %}
+            <div class="col-4">
+                <a style="text-decoration:none;" href="{% url 'treatments' 'display' None %}"><div class="p-3" style="color:white;font-size:35px;background-color:green;border:5px solid green;border-radius:30px;"><img width="100%" src="/media/uploads/treatments.jpg"><br><b>TREATMENTS</b></div></a>
+            </div>
+            {% endif %}
+
+          </div>
+
+          <div class="row" style="margin-top:5%;">
+            {% if user.member.lab_attendant %}
+            <div class="col-4">
+                <a style="text-decoration:none;" href="{% url 'first_aids' 'display' None %}"><div class="p-3" style="color:white;font-size:40px;background-color:green;border:5px solid green;border-radius:30px;"><img width="100%" src="/media/uploads/treatments.jpg"><br><b>FIRST AIDS</b></div></a>
+            </div>
+            {% endif %}
+
+            <div class="col-4">
+                <a style="text-decoration:none;" href="{% url 'disease_database' %}"><div class="p-3" style="color:white;font-size:40px;background-color:green;border:5px solid green;border-radius:30px;"><img width="100%" src="/media/uploads/visit.png"><br><b>DISEASE DATABASE</b></div></a>
+            </div>
+
+          </div>
+        </div>
+{% endblock %}

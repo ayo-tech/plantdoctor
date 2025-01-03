@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <!-- contact -->
+
+    <div id="contact" class="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title">
+                        <h2>Register <strong class="black">Here</strong></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid padddd">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 padddd">
+            <div class="map_section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                            <form class="main_form" method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    {% for field in form %}
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                        <label>{{field.label}}</label>
+                                        <input class="form-control" placeholder="{{field.label}}" type="{{field.field.widget.input_type}}" name="{{field.name}}" id="id_{{field.name}}">
+                                    </div>
+                                    {% endfor %}
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                        <button type="submit" class="send">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126650.8074984363!2d3.3616478878293936!3d7.259300902967018!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103a377c4af65f57%3A0x2f6708ee17fc4eb!2sFederal%20universlty%20of%20agricuiture%2Cabeokuta.%20(FUNAAB)!5e0!3m2!1sen!2sng!4v1696590556089!5m2!1sen!2sng" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end contact -->
+{% endblock %}

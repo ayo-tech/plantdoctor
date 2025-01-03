@@ -1,0 +1,128 @@
+{% extends 'app_dashboard_base.html' %}
+{% load custom_tags %}
+{% block content %}
+
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:white;border:10px solid green;border-radius:30px;">
+
+                <div class="row">
+                    <div class="col-12">
+                        {% if object.image %}
+                        <img src="/media/{{object.image}}" width="100%">
+                        {% else %}
+                        <img src="/media/uploads/default_image.png" width="100%">
+                        {% endif %}
+                        <br><br>
+                        <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                              <div class="row">
+                                {% for field in form %}
+                                    <div class="col-12 p-4">
+                                        <div class="row">
+                                            <label style="font-size:40px;">{{field.label}}</label>
+                                            <input style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:40px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="{{field.name}}" name="{{field.name}}" id="id_{{field.name}}" type="{{field.field.widget.input_type}}" value="{{field.value}}">
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                              </div>
+
+                            {% if object.farmer %}
+                              <br>
+                              <h1 style="font-size:60px;">FARMER DETAILS</h1>
+                              <div class="row">
+                                    <div class="col-12 p-4">
+                                        <div class="row">
+                                            <label style="font-size:40px;">Crops Farmed</label>
+                                            <textarea style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:40px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="CROPS FARMED" name="crops_farmed">{{object.farmer.crops_farmed}}</textarea>
+                                        </div>
+                                    </div>
+                              </div>
+                              <div class="row">
+                                    <div class="col-12 p-4">
+                                        <div class="row">
+                                            <label style="font-size:40px;">farm_location</label>
+                                            <textarea style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:40px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="FARM LOCATION" name="farm_location">{{object.farmer.farm_location}}</textarea>
+                                        </div>
+                                    </div>
+                              </div>
+                              <div class="row">
+                                    <div class="col-12 p-4">
+                                        <div class="row">
+                                            <label style="font-size:40px;">Longitude</label>
+                                            <input type="number" step="0.0001" style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:40px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="LONGITUDE" name="longitude" value="{{object.farmer.longitude}}">
+                                        </div>
+                                    </div>
+                              </div>
+                              <div class="row">
+                                    <div class="col-12 p-4">
+                                        <div class="row">
+                                            <label style="font-size:40px;">latitude</label>
+                                            <input type="number" step="0.0001" style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:40px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="LATITUDE" name="latitude" value="{{object.farmer.latitude}}">
+                                        </div>
+                                    </div>
+                              </div>
+                            {% else %}
+                              <br>
+                              <h1 style="font-size:60px;">LAB TECHNICIAN DETAILS</h1>
+                              <div class="row">
+                                    <div class="col-12 p-4">
+                                        <div class="row">
+                                            <label style="font-size:40px;">Lab Specialization</label>
+                                            <textarea style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:40px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="LAB SPECIALIZATION" name="lab_specialization">{{object.lab_attendant.lab_specialization}}</textarea>
+                                        </div>
+                                    </div>
+                              </div>
+                              <div class="row">
+                                    <div class="col-12 p-4">
+                                        <div class="row">
+                                            <label style="font-size:40px;">Lab Location</label>
+                                            <textarea style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:40px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="LAB LOCATION" name="lab_location">{{object.lab_attendant.lab_location}}</textarea>
+                                        </div>
+                                    </div>
+                              </div>
+                              <div class="row">
+                                    <div class="col-12 p-4">
+                                        <div class="row">
+                                            <label style="font-size:40px;">Longitude</label>
+                                            <input type="number" step="0.0001" style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:40px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="LONGITUDE" name="longitude"  id="longitude">
+                                        </div>
+                                    </div>
+                              </div>
+                              <div class="row">
+                                    <div class="col-12 p-4">
+                                        <div class="row">
+                                            <label style="font-size:40px;">latitude</label>
+                                            <input type="number" step="0.0001" style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:40px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="LATITUDE" name="latitude" id="latitude">
+                                        </div>
+                                    </div>
+                              </div>
+                            {% endif %}
+
+                              <div class="row">
+                                <div class="col-12 p-4">
+                                    <div class="row pt-5">
+                                        <button type="submit" class="col-12 p-5" style="border-radius:30px;background-color:green;color:white;"><center><h1><b>UPDATE</b></h1></center></button>
+                                    </div>
+                                </div>
+                              </div>
+
+                        </form>
+                        <div class="col-12 pt-5">
+                          <button onclick="getLocation()" class="btn btn-block p-3" style="background-color: #228B22; width: 100%; color: white; font-size: 50px; border-radius: 90px;"><strong><b>GET LOCATION</b></strong></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          </div>
+        </div>
+{% endblock %}
+
+
+
+
+
+
+

@@ -1,0 +1,63 @@
+<html>
+    <title>PlantDoctoor Register</title>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <style>
+            .contained {
+                width:80%;
+                margin:auto;
+            }
+            .show {
+                z-index:1;
+            }
+        </style>
+    </head>
+    <body background="/media/uploads/green2.png" style="background-size:cover;">
+        <div class="contained pt-5" style="height:20%;opacity:0.9;">
+          <div class="row" style="margin-top:10%;">
+            <div class="col-12">
+              <h1 style="color:white;font-size:120px;"><strong><b>Register!</b></strong></h1><br><h2 style="font-size:80px;color:white;opacity:0.9;">here</h2>
+            </div>
+          </div>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="contained pt-5" style="height:50%;opacity:0.9;">
+              <div class="row">
+                {% for field in form %}
+                {% if field.label == 'Designation' %}
+                <div class="col-12">
+                  <label style="color:white;width:100%;font-size:40px;text-transform:uppercase;"><strong><b>Role</b></strong></label>
+                  <select class="form-control" type="{{field.field.widget.input_type}}" name="{{field.name}}" id="id_{{field.name}}" style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:100px;font-size:40px;border-radius:40px;opacity:0.9;">
+                      <option style="font-size:15px;" value="farmer">Farmer</option>
+                      <option style="font-size:15px;" value="lab attendant">Lab Attendant</option>
+                  </select>
+                </div>
+                {% elif field.label == 'Address' %}
+                <div class="col-12">
+                  <label style="color:white;width:100%;font-size:40px;text-transform:uppercase;"><strong><b>{{field.label}}</b></strong></label>
+                  <textarea rows=4 class="form-control" type="{{field.field.widget.input_type}}" name="{{field.name}}" id="id_{{field.name}}" style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:200px;font-size:60px;border-radius:40px;opacity:0.9;"></textarea>
+                </div>
+                {% else %}
+                <div class="col-12">
+                  <label style="color:white;width:100%;font-size:40px;text-transform:uppercase;"><strong><b>{{field.label}}</b></strong></label>
+                  <input class="form-control" type="{{field.field.widget.input_type}}" name="{{field.name}}" id="id_{{field.name}}" style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:100px;font-size:60px;border-radius:40px;opacity:0.9;">
+                </div>
+                {% endif %}
+                {% endfor %}
+                <div class="col-12 pt-5">
+                  <button type="submit" class="btn btn-block p-3" style="background-color: #228B22; width: 100%; color: white; font-size: 50px; border-radius: 90px;"><strong><b>SUBMIT</b></strong></button>
+                </div>
+                <div class="col-12 pt-5">
+                  <a href="{% url 'app_login' %}" class="btn btn-block p-3" style="background-color: black; width: 100%; color: white; font-size: 50px; border-radius: 90px;"><strong><b>LOGIN</b></strong></a>
+                </div>
+              </div>
+            </div>
+        </form>
+
+
+
+    </body>
+</html>

@@ -1,0 +1,22 @@
+{% extends 'app_dashboard_base.html' %}
+{% load custom_tags %}
+{% block content %}
+    <div class="contained">
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+          <div class="row">
+            <div class="col-12 p-4">
+                {% for field in form %}
+                    <div class="row pt-3" style="width:100%;padding:20px;background-color:white;font-size:60px;color:green;">
+                        <label><b><strong >{{field.label}}</strong></b></label>
+                        <textarea rows=4 style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:400px;font-size:60px;opacity:0.9;" class="form-control col-12" placeholder="{{field.label}}" type="{{field.field.widget.input_type}}" name="{{field.name}}" id="id_{{field.name}}">{{field.value}}</textarea>
+                    </div>
+                {% endfor %}
+                <div class="row pt-5">
+                    <button name="create" class="col-12 p-5" style="border-radius:30px;background-color:green;color:white;font-size:60px;"><center><h1><b>ADD NEW TREATMENT</b></h1></center></button>
+                </div>
+            </div>
+          </div>
+        </form>
+    </div>
+{% endblock %}

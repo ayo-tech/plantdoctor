@@ -1,0 +1,76 @@
+{% extends 'app_dashboard_base.html' %}
+{% load custom_tags %}
+{% block content %}
+
+        <div class="contained">
+            <form method="get" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div class="row pt-3">
+                    <input style="border:4px solid black;width:100%;height:150px;font-size:60px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="Search..." name="q">
+                </div>
+            </form>
+        </div>
+
+        <div class="contained">
+            <div class="row pt-3">
+                <button form="tableform" style="background-color:red;border:4px solid red;width:100%;height:150px;font-size:60px;border-radius:40px;opacity:0.9;" class="form-control col-12" name="delete" type="submit"><b>Delete Selected</b></button>
+            </div>
+        </div>
+
+        {% for secondary_diagnosis in object_list %}
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:white;border:10px solid green;border-radius:30px;">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="contained">
+                            <br><br>
+                            <form method="get" enctype="multipart/form-data" id="tableform">
+                            {% csrf_token %}
+                              <div class="row">
+                                <div class="col-12 p-4">
+                                    <div class="row pt-3">
+                                        <label style="font-size:50px;">Lab Attendant: {{secondary_diagnosis.lab_attendant}}</label>
+                                    </div>
+                                    <div class="row pt-3">
+                                        <label style="font-size:50px;">Farmer: {{secondary_diagnosis.secondary_diagnosis_farmer.farmer.member.name}}</label>
+                                    </div>
+                                    <div class="row pt-3">
+                                        <label style="font-size:50px;">Selected Day: {{secondary_diagnosis.selected_visit_day}}</label>
+                                    </div>
+                                    {% if user.member.designation == 'lab attendant' %}
+                                    <div class="row pt-5">
+                                        <a href="{% url 'new_treatment' secondary_diagnosis.id %}" class="col-12 p-3" style="text-decoration:none;border-radius:30px;background-color:green;color:white;"><center><h1><b>ADD NEW TREATMENT</b></h1></center></a>
+                                    </div>
+                                    {% endif %}
+                                    {% for new_treatment in secondary_diagnosis|new_treatment_checker %}
+                                    <div class="row pt-3">
+                                        <input style="width:50px;height:50px;" type="checkbox" name="new_treatment_id" value="{{new_treatment.id}}">
+                                    </div>
+                                    <div class="row pt-3">
+                                        <label style="font-size:50px;">New Diagnosis: {{new_treatment.new_diagnosis}}</label>
+                                    </div>
+                                    <div class="row pt-3">
+                                        <label style="font-size:50px;">New Prescription: {{new_treatment.new_prescription}}</label>
+                                    </div>
+                                    <br>
+                                    {% endfor %}
+                                    <br>
+                                    <div class="row pt-5">
+                                        <a href="{% url 'view_secondary_diagnosis' secondary_diagnosis.diagnosis.id secondary_diagnosis.secondary_diagnosis_farmer.farmer.member.user.id %}" class="col-12 p-3" style="text-decoration:none;border-radius:30px;background-color:green;color:white;"><center><h1><b>VIEW DETAILS</b></h1></center></a>
+                                    </div>
+                                </div>
+                              </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <br><br>
+        <h1 class="contained" style="padding:20px;background-color:black;color:white;">No Secondary Diagnosis</h1>
+        {% endfor %}
+
+{% endblock %}

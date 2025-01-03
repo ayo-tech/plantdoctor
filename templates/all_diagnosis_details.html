@@ -1,0 +1,70 @@
+{% extends 'app_dashboard_base.html' %}
+{% load custom_tags %}
+{% block content %}
+
+        {% for diagnosis in object_list %}
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:white;border:10px solid green;border-radius:30px;">
+                <div class="row">
+                    <div class="col-12">
+                        <img src="/media/{{diagnosis.image}}" width="250px" style="border-radius:30px;">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h1>User: {{diagnosis.user}}</h1>
+                    </div>
+                    <div class="col-12">
+                        <h1>Diagnosis: {{diagnosis.label}}</h1>
+                    </div>
+                    <div class="col-12">
+                        <h1>Disease: {{diagnosis.disease}}</h1>
+                    </div>
+                    <div class="col-12">
+                        <h1>Confidence elevel: {{diagnosis.confidence_level}}%</h1>
+                    </div>
+                    <div class="col-12">
+                        <h1>Status: {{diagnosis.status}}</h1>
+                    </div>
+                    <div class="col-12">
+                        <h1>Done: {{diagnosis.done}}</h1>
+                    </div>
+                    <div class="col-12">
+                        <h1>Date: {{diagnosis.date}}</h1>
+                    </div>
+                </div>
+
+                {% if 80 <= diagnosis.confidence_level <= 100  %}
+                <progress class="mt-5 mb-5" style="color:green;font-size:20px;width:100%;" value="{{diagnosis.confidence_level}}" max="100"> {{diagnosis.confidence_level}} &percnt; </progress>
+                {% elif 50 <= diagnosis.confidence_level < 80  %}
+                <progress class="mt-5 mb-5" style="color:yellow;font-size:20px;width:100%;" value="{{diagnosis.confidence_level}}" max="100"> {{diagnosis.confidence_level}} &percnt; </progress>
+                {% elif 0 <= diagnosis.confidence_level < 50  %}
+                <progress class="mt-5 mb-5" style="color:red;font-size:20px;width:100%;" value="{{diagnosis.confidence_level}}" max="100"> {{diagnosis.confidence_level}} &percnt; </progress>
+                {% endif %}
+                <div class="row">
+                    {% if diagnosis.confidence_level > 60 %}
+                    <div class="col-6">
+                        <a href="{% url 'treatments' 'diagnosis' diagnosis.disease %}" class="p-3" style="text-decoration:none;font-size:40px;float:right;border-radius:20px;color:white;background-color:green;"><b>View Treatments</b></a>
+                    </div>
+                    {% else %}
+                        {% if user.member.farmer %}
+                            {% if diagnosis.id|check_secondary_diagnosis:user.id is None %}
+                            <div class="col-8">
+                                <a href="{% url 'view_secondary_diagnosis' diagnosis.id user.id %}" class="p-3" style="text-decoration:none;font-size:40px;float:right;border-radius:20px;color:white;background-color:#009E69;"><b>View Secondary Diagnosis</b></a>
+                            </div>
+                            {% else %}
+                            <div class="col-8">
+                                <a href="{% url 'get_secondary_diagnosis' diagnosis.id user.id %}" class="p-3" style="text-decoration:none;font-size:40px;float:right;border-radius:20px;color:white;background-color:#009E60;"><b>Get Secondary Diagnosis</b></a>
+                            </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <h1 style="background-color:black;padding:10px;border-radius:20px;">No diagnosis here</h1>
+        {% endfor %}
+{% endblock %}

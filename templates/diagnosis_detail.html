@@ -1,0 +1,37 @@
+{% extends 'app_dashboard_base.html' %}
+{% load custom_tags %}
+{% block content %}
+
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:white;border:10px solid green;border-radius:30px;">
+                <div class="row">
+                    <div class="col-12">
+                        <img src="/media/{{object.image}}" width="100%" style="border-radius:30px;">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h1>{{object.label}}</h1>
+                    </div>
+                </div>
+
+                {% if 80 <= object.confidence_level <= 100  %}
+                <progress class="mt-5 mb-5" style="color:green;font-size:20px;width:100%;" value="{{object.confidence_level}}" max="100"> {{object.confidence_level}} &percnt; </progress>
+                {% elif 50 <= object.confidence_level < 80  %}
+                <progress class="mt-5 mb-5" style="color:yellow;font-size:20px;width:100%;" value="{{object.confidence_level}}" max="100"> {{object.confidence_level}} &percnt; </progress>
+                {% elif 0 <= object.confidence_level < 50  %}
+                <progress class="mt-5 mb-5" style="color:red;font-size:20px;width:100%;" value="{{object.confidence_level}}" max="100"> {{object.confidence_level}} &percnt; </progress>
+                {% endif %}
+                <div class="row">
+                    <h1 style="style:30px;">TREATMENTS</h1>
+                    {% for treatment in treatments %}
+                    <div class="col-12">
+                        <h1>{{treatment.prescription}}</h1>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

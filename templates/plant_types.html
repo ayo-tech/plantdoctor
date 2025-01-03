@@ -1,0 +1,65 @@
+{% extends 'app_dashboard_base.html' %}
+{% load custom_tags %}
+{% block content %}
+
+        <button onclick="myFunction('Demo1@')" class="contained col-12 p-5 w3-button w3-block w3-black w3-left-align" style="border-radius:30px;background-color:green;color:white;"><center><h1><b>UPDATE CROPS</b></h1></center></button>
+
+        <div id="Demo1@" class="w3-hide w3-animate-zoom">
+            <div class="contained">
+                <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                  <div class="row">
+                    <div class="col-12 p-4" style="background-color:none;color:green;border:30px solid green;border-radius:30px;">
+                        {% for field in form %}
+                            <div class="row pt-3">
+                                <label>{{field.label}}</label>
+                                <textarea rows=4 style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:60px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="Add a crop and separate with a comma" type="{{field.field.widget.input_type}}" name="{{field.name}}" id="id_{{field.name}}">{{object.crops_farmed}}</textarea>
+                            </div>
+                        {% endfor %}
+                        <div class="row pt-5">
+                            <button name="create" class="col-12 p-5" style="border-radius:30px;background-color:green;color:white;"><center><h1><b>SUBMIT</b></h1></center></button>
+                        </div>
+                    </div>
+                  </div>
+                </form>
+            </div>
+        </div>
+
+        {% for crop in farmed_crops %}
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:white;border:10px solid green;border-radius:30px;">
+                <div class="row">
+                    <div class="col-12">
+                        <h6 style="font-size:30px;color:green;"><strong><b>CROP</b></strong></h6>
+                        <h3 style="font-size:45px;">{{crop}}</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div style="font-size:45px;" class="col-6">Diseases</div>  <div style="font-size:45px;" class="col-6">Treatments</div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                      {% for disease in crop|farmed_crops_diseases %}
+                        <div class="row">
+                            <div class="col-6" style="font-size:45px;">
+                                {{disease}}
+                            </div>
+                            <div class="col-6" style="font-size:45px;">
+                                {% for treatment in disease|disease_treatment %}
+                                {{treatment.prescription}},
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <hr>
+                      {% endfor %}
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <br><br>
+        <h1>No Crops farmed</h1>
+        {% endfor %}
+{% endblock %}

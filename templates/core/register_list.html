@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- for_box -->
+    <div class="for_box_bg">
+        <div class="container">
+            <div class="row">
+                {% if user.is_authenticated %}
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">First</th>
+                          <th scope="col">Last</th>
+                          <th scope="col">Handle</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">1</th>
+                          <td>Mark</td>
+                          <td>Otto</td>
+                          <td>@mdo</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">2</th>
+                          <td>Jacob</td>
+                          <td>Thornton</td>
+                          <td>@fat</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">3</th>
+                          <td>Larry</td>
+                          <td>the Bird</td>
+                          <td>@twitter</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                {% else %}
+                    <h1>You are not authorized to view this page</h1>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- end for_box -->
+{% endblock %}

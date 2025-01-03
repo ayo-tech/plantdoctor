@@ -1,0 +1,125 @@
+<html>
+    <title>PlantDoctor</title>
+    <head>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <style>
+            .audioPlayer{
+              display: block;
+              border-radius: 20px;
+              width: 100%;
+              font-size: 100px;
+              margin:0 auto;
+            }
+            .contained {
+                width:90%;
+                margin:auto;
+            }
+            .backbutton {
+                width:100%;
+                margin:auto;
+                left:0;
+                top:0;
+                position:fixed;
+                z-index:1;
+                padding:10px;
+                opacity:0.7;
+                background-color:black;
+            }
+            .menubar {
+                width:100%;
+                margin:auto;
+                left:0;
+                bottom:0;
+                position:fixed;
+                z-index:1;
+                padding:1px;
+                opacity:0.7;
+                background-color:black;
+            }
+            .outline {
+              -webkit-text-stroke-width: 3px;
+              -webkit-text-stroke-color: black;
+            }
+        </style>
+    </head>
+    <body background="/media/uploads/green3.png" style="background-size: cover;opacity:0.9;">
+        <div class="backbutton">
+          <div class="row">
+
+            <div class="col-2 pt-4">
+              <button onclick="history.back()" style="color:white;border:none;background-color:black;">
+                <i style="" class="fa fa-chevron-left fa-3x" aria-hidden="true"></i>
+              </button>
+            </div>
+
+            <div class="col-8 pt-4" style="font-size:40px;color:white;">
+               <b>{{client}}</b>
+            </div>
+
+            <div class="col-2 p-1">
+                <img src="/media/uploads/applogo2.png" height="90px" width="90px">
+            </div>
+
+          </div>
+        </div>
+
+        <br><br><br><br><br><br><br><br>
+        {% block content %}
+        {% endblock %}
+        <br><br><br><br><br><br><br><br>
+
+        <div class="menubar">
+          <div class="row" style="padding:15px;margin:0;">
+            <div class="col-2 pt-1">
+              <center><a style="font-size:40px;color:white;text-decoration:none;width:15%;" href="{% url 'app_dashboard' %}"><i class="fa fa-home fa-2x"></i><br><font size="6" color="white">menu</font></a></center>
+            </div>
+            <div class="col-2 pt-1">
+              <center><a style="font-size:40px;color:white;text-decoration:none;width:15%;" href="{% url 'profile' user.id %}"><i class="fa fa-user fa-2x"></i><br><font size="6" color="white">profile</font></a></center>
+            </div>
+            <div class="col-4 pt-4">
+              <center><a class="p-4 pt-5" style="background-color:white;font-size:40px;color:white;text-decoration:none;width:40%;border-radius:50%;" href="{% url 'app_image_upload' %}"><i class="fa fa-camera fa-2x" style="color:black;"></i></a></center>
+            </div>
+            <div class="col-2 pt-1">
+              <center><a style="font-size:40px;color:white;text-decoration:none;width:15%;" href="{% url 'chats' %}"><i class="fa fa-comment fa-2x"></i><br><font size="6" color="white">chat</font></a></center>
+            </div>
+            <div class="col-2 pt-1">
+              <center><a style="font-size:40px;color:white;text-decoration:none;width:15%;" href="{% url 'app_logout' %}"><i class="fa fa-sign-out fa-2x"></i><br><font size="6" color="white">sign out</font></a></center>
+            </div>
+          </div>
+        </div>
+
+        <script>
+        function myFunction(id) {
+          var x = document.getElementById(id);
+          if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+          } else {
+            x.className = x.className.replace(" w3-show", "");
+          }
+        }
+        </script>
+
+
+        <script>
+        const x = document.getElementById("demo");
+        let longitude = document.getElementById("longitude");
+        let latitude = document.getElementById("latitude");
+
+        function getLocation() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+          } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+          }
+        }
+
+        function showPosition(position) {
+          longitude.value = position.coords.longitude;
+          latitude.value = position.coords.latitude;
+        }
+        </script>
+    </body>
+</html>

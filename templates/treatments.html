@@ -1,0 +1,133 @@
+{% extends 'app_dashboard_base.html' %}
+{% load custom_tags %}
+{% block content %}
+        <button onclick="myFunction('Demo1@')" class="contained col-12 p-5 w3-button w3-block w3-black w3-left-align" style="border-radius:30px;background-color:green;color:white;"><center><h1><b>{% if client == 'treatments' %}ADD TREATMENT{% else %}ADD FIRST_AIDS{% endif %}</b></h1></center></button>
+
+        <div id="Demo1@" class="w3-hide w3-animate-zoom">
+            <div class="contained">
+                <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                  <div class="row">
+                    <div class="col-12 p-4" style="background-color:none;color:green;border:30px solid green;border-radius:30px;">
+                        {% for field in form %}
+                        {% if field.label == 'Diagnosis' %}
+                            <div class="row pt-3">
+                                <label>{{field.label}}</label>
+                                <select style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:60px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="{{field.label}}" name="{{field.name}}" id="id_{{field.name}}">
+                                    {% for disease in diseases %}
+                                        <option style="font-size:20px;" value="{{disease}}">{{disease}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% else %}
+                            <div class="row pt-3">
+                                <label>{{field.label}}</label>
+                                <textarea rows=4 style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:60px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="{{field.label}}" type="{{field.field.widget.input_type}}" name="{{field.name}}" id="id_{{field.name}}"></textarea>
+                            </div>
+                        {% endif %}
+                        {% endfor %}
+                        <div class="row pt-5">
+                            <button name="create" class="col-12 p-5" style="border-radius:30px;background-color:green;color:white;"><center><h1><b>CREATE</b></h1></center></button>
+                        </div>
+                    </div>
+                  </div>
+                </form>
+            </div>
+        </div>
+
+        {% for treatment in object_list %}
+        <div class="contained">
+          <div class="row" style="margin-top:5%;">
+            <div class="col-12 p-4" style="background-color:white;border:10px solid green;border-radius:30px;">
+                <div class="row">
+                    <div class="col-12">
+
+                        <!-- Button trigger modal -->
+                        {% if user.member.lab_attendant %}
+                        <button style="border:5px solid white;background-color:white;color:red;" type="button"  data-bs-toggle="modal" data-bs-target="#delete{{forloop.counter}}">
+                            <i class="fa fa-times fa-3x" aria-hidden="true"></i>
+                        </button>
+                        {% endif %}
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="delete{{forloop.counter}}" tabindex="-1" aria-labelledby="delete{{forloop.counter}}Label" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title p-5" id="delete{{forloop.counter}}Label" style="font-size:45px;">Are you sure you want to delete this Treatment?</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <form method="post" id="deleteform{{forloop.counter}}">
+                                    <input name="{{form.diagnosis.name}}" id="id_{{form.diagnosis.name}}" type="hidden" value="diagnosed">
+                                    <input name="{{form.prescription.name}}" id="id_{{form.prescription.name}}" type="hidden" value="prescribed">
+                                    {% csrf_token %}
+                                    <div style="display:none;"><input name="treatment_id" value="{{treatment.id}}"></div>
+                                </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="font-size:45px;">Close</button>
+                                <button name="delete" type="submit" form="deleteform{{forloop.counter}}" class="btn btn-outline-danger" style="font-size:45px;">Yes</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <h6 style="font-size:30px;color:green;"><strong><b>DIAGNOSIS</b></strong></h6>
+                        <h3 style="font-size:45px;">{{treatment.diagnosis}}</h3>
+                        <h6 style="font-size:30px;color:green;"><strong><b>PRESCRIPTION</b></strong></h6>
+                        <h3 style="font-size:45px;">{{treatment.prescription}}</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        {% if user.member.lab_attendant %}
+                        <button class="p-3" onclick="myFunction('Demo{{treatment.id}}')" style="border: 3px solid #009E60;font-size:40px;float:right;border-radius:20px;color:white;background-color:#009E60;"><b>UPDATE</b></button>
+                        {% endif %}
+
+                        <div id="Demo{{treatment.id}}" class="w3-hide w3-animate-zoom">
+                            <div class="contained">
+                                <br><br>
+                                <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                  <div class="row">
+                                    <div class="col-12 p-4">
+                                        <input name="treatment_id" value="{{treatment.id}}" type="hidden">
+                                        <div class="row pt-3">
+                                            <label style="font-size:50px;">Diagnosis</label>
+                                            <textarea rows=4 style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:50px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="{{form.diagnosis.name}}" name="{{form.diagnosis.name}}" id="id_{{form.diagnosis.name}}">{{treatment.diagnosis}}</textarea>
+                                        </div>
+                                        <div class="row pt-3">
+                                            <label style="font-size:50px;">Prescription</label>
+                                            <textarea rows=4 style="border-left:none;border-right:none;border-top:none;border-bottom:4px solid black;width:100%;height:150px;font-size:50px;border-radius:40px;opacity:0.9;" class="form-control col-12" placeholder="{{form.prescription.name}}" name="{{form.prescription.name}}" id="id_{{form.prescription.name}}">{{treatment.prescription}}</textarea>
+                                        </div>
+                                        <div class="row pt-5">
+                                            <button name="update" class="col-12 p-5" style="border-radius:30px;background-color:green;color:white;"><center><h1><b>UPDATE</b></h1></center></button>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <br><br>
+            {% if client == 'treatments' %}
+                {% if use == 'display' %}
+                <h1  class="contained" style="padding:20px;background-color:black;color:white;">No Treatments Recorded</h1>
+                {% else %}
+                <h1  class="contained" style="padding:20px;background-color:black;color:white;">No Treatments for {{diagnosis}}</h1>
+                {% endif %}
+            {% else %}
+                {% if use == 'display' %}
+                <h1  class="contained" style="padding:20px;background-color:black;color:white;">No First_aids Recorded</h1>
+                {% else %}
+                <h1  class="contained" style="padding:20px;background-color:black;color:white;">No First_aids for {{diagnosis}}</h1>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+{% endblock %}
